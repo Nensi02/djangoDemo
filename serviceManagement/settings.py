@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'service_fastapi',
-    'service_app'
+    'service_app.apps.ServiceAppConfig'
 ]
 
 MIDDLEWARE = [
@@ -79,11 +79,11 @@ WSGI_APPLICATION = 'serviceManagement.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'justdial_service',
+        'NAME': 'justdial_service_app',
         'USER': 'postgres',
-        'PASSWORD': 'nensi',
+        'PASSWORD': 'postgres',
         'HOST': 'localhost',
-        'PORT': '5432',
+        'PORT': '5433',
     }
 }
 
@@ -128,3 +128,22 @@ STATIC_URL = '/static/'
 # https://docs.djangoproject.com/en/5.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+from django.contrib.messages import constants as messages
+
+MESSAGE_TAGS = {
+    messages.DEBUG: 'debug',
+    messages.INFO: 'info',
+    messages.SUCCESS: 'success',
+    messages.WARNING: 'warning',
+    messages.ERROR: 'danger',
+}
+
+AUTH_USER_MODEL = 'service_app.CustomUser'
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'mailtest.radixweb.net'
+EMAIL_PORT = 587  # or 465
+EMAIL_HOST_USER = 'testdotnet@mailtest.radixweb.net'
+EMAIL_HOST_PASSWORD = 'Radix@web#8'
+EMAIL_USE_TLS = True  # or False for port 465
