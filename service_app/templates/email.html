@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title></title>
+    <style>
+      body {
+        margin: 0;
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Roboto",
+          "Oxygen", "Ubuntu", "Cantarell", "Fira Sans", "Droid Sans",
+          "Helvetica Neue", sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      .header {
+        height: 74px;
+        box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1),
+          0 2px 4px -2px rgb(0 0 0 / 0.1);
+      }
+
+      .logo {
+        display: flex;
+        align-items: center;
+        height: 100%;
+        padding: 0px 25px 0px 25px;
+      }
+
+      .header img {
+        width: 146px;
+        height: 36px;
+        max-width: 100%;
+        /* padding: 12px; */
+      }
+
+      .containt-div {
+        padding: 0px 25px 0px 25px;
+      }
+
+      .container {
+        border-radius: 0.5rem;
+        border: 1px solid #2f59a7;
+        margin: 25px auto 25px auto;
+        width: 450px;
+        text-align: center;
+        height: 280px;
+      }
+
+      .registration-font {
+        font-weight: 500;
+        font-size: x-large;
+        color: #2f59a7;
+      }
+
+      .msg {
+        color: rgb(107 114 128);
+        font-size: 1rem;
+        line-height: 1.625;
+      }
+
+      .button {
+        background-color: #2f59a7;
+        color: white;
+        padding: 0.5rem 1rem 0.5rem 1rem;
+        border-radius: 0.25rem;
+        text-decoration: none;
+        font-weight: 700;
+        font-size: medium;
+      }
+
+      .button:hover {
+        background-color: #f6cf70;
+        color: #656565;
+      }
+
+      .footer-2 {
+        display: flex;
+        justify-content: space-between;
+      }
+
+      .footer {
+        height: 50px;
+        color: white;
+        background-color: #2f59a7;
+        padding: 25px;
+        margin-top: auto;
+      }
+    </style>
+    <!-- <link rel="stylesheet" href="style.css"> -->
+  </head>
+  <body>
+    <session class="session">
+      <header class="header">
+        <div class="logo"><img src="" /></div>
+      </header>
+
+      <div class="containt-div">
+        <div>
+          <p>Lawyer Name : {{lawyer_name}}</p>
+        </div>
+
+        <div class="container">
+          <img
+            src=""
+            height="70px"
+            width="70px"
+            style="padding-top: 25px"
+          />
+          <p class="registration-font">{{template_title}}</p>
+          <p class="msg">Please click the link below to {{ verified_message }}.</p>
+          <a href="{{forgot_password}}" class="button">{{link_title}}</a>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="solical">
+          <img src="" height="20px" width="20px" />
+          <span>2081 Maggio Island, Daremouth, TX 32806</span>
+        </div>
+        <div class="solical" style="margin-top: 5px">
+          <img src="" height="20px" width="20px" />
+          <span>+1-326-546-1123</span>
+        </div>
+      </footer>
+    </session>
+  </body>
+</html>

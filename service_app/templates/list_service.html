@@ -1,180 +1,60 @@
-{% comment %} {% load static %}
 <!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task List</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            background-color: #f4f4f4;
-        }
-        
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        
-        h1 {
-            text-align: center;
-            margin-bottom: 20px;
-        }
-        
-        table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        
-        table th, table td {
-            padding: 10px;
-            border: 1px solid #ddd;
-        }
-        
-        table th {
-            background-color: #f2f2f2;
-            text-align: left;
-        }
-        
-        table td {
-            background-color: #fff;
-        }
-        
-        .btn {
-            display: inline-block;
-            padding: 10px 20px;
-            margin-bottom: 10px;
-            text-decoration: none;
-            background-color: #007bff;
-            color: #fff;
-            border: none;
-            border-radius: 5px;
-            cursor: pointer;
-        }
-        
-        .btn-detail {
-            background-color: #28a745;
-        }
-        
-        .btn-update {
-            background-color: #ffc107;
-        }
-        
-        .btn-delete {
-            background-color: #dc3545;
-        }
-        /* tasks/static/tasks/css/style.css */
-        /* Add this CSS to style the toggle button */
-
-        /* Checkbox styling */
-        input[type="checkbox"] {
-            position: absolute;
-            opacity: 0;
-            cursor: pointer;
-        }
-
-        /* Toggle switch styling */
-        input[type="checkbox"] + label {
-            display: block;
-            position: relative;
-            padding-left: 35px;
-            margin-bottom: 10px;
-            cursor: pointer;
-            font-size: 16px;
-            line-height: 24px;
-        }
-
-        /* Toggle switch slider */
-        input[type="checkbox"] + label:before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 30px;
-            height: 15px;
-            background-color: #ccc;
-            border-radius: 15px;
-            transition: background-color 0.3s ease;
-        }
-
-        /* Toggle switch slider circle */
-        input[type="checkbox"]:checked + label:before {
-            background-color: #007bff; /* Change color when checked */
-        }
-
-        /* Toggle switch circle */
-        input[type="checkbox"] + label:after {
-            content: '';
-            position: absolute;
-            top: 2.5px;
-            left: 2.5px;
-            width: 20px;
-            height: 20px;
-            background-color: #fff;
-            border-radius: 50%;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
-            transition: left 0.3s ease;
-        }
-
-        /* Toggle switch slider move when checked */
-        input[type="checkbox"]:checked + label:after {
-            left: calc(100% - 2.5px);
-        }
-
-    </style>
-</head>
-<body>
-
-<div class="container">
-    <h1>Task List</h1>
-    <a href="" class="btn">Add Service</a>
-    <table>
-        <thead>
-            <tr>
-                <th>Service Name</th>
-                <th>Description</th>
-                <th>Status</th>
-                <th>Actions</th>
-            </tr>
-        </thead>
-        <tbody>
-            {% for service in services %}
-            <tr>
-                <td>{{ service.name }}</td>
-                <td>{{ service.description }}</td>
-                <td>
-                    <input type="checkbox" id="status_{{ service.pk }}" {% if service.status %} checked {% endif %} disabled>
-                    <label for="status_{{ service.pk }}"></label>
-                </td>
-                <td>
-                    <a href=""" class="btn btn-detail">Detail</a>
-                    <a href=""" class="btn btn-update">Update</a>
-                    <form action="" method="post" style="display: inline;">
-                        {% csrf_token %}
-                        <button type="submit" class="btn btn-delete">Delete</button>
-                    </form>
-                </td>
-            </tr>
-            {% endfor %}
-        </tbody>
-    </table>
-</div>
-
-</body>
-</html> {% endcomment %}
-{% comment %} <!DOCTYPE html>
 <html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Service List</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+        }
+
+        /* Styles for error message */
+        .alert-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+        }
+
+        /* Close button */
+        .close {
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .close:hover {
+            color: #000;
+            text-decoration: none;
+            opacity: 0.75;
+        }
+  </style>
 </head>
 <body>
   
   <div class="container">
     <h1>Service List</h1>
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'success' %}alert-success {% elif message.tags == 'danger' %}alert-error {% endif %}" id="{% if message.tags == 'success' %}successMessage{% elif message.tags == 'danger' %}errorMessage{% endif %}">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ message | safe }} <!-- This will print the actual message content -->
+        </div>
+    {% endfor %}
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addServiceModal">
       Add Service

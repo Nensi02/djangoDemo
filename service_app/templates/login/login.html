@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f4f4f4;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 400px;
+            margin: 50px auto;
+            background: #fff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        }
+        h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        form {
+            display: flex;
+            flex-direction: column;
+        }
+        label {
+            margin-bottom: 8px;
+            font-weight: bold;
+        }
+        input[type="text"],
+        input[type="email"],
+        input[type="password"] {
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button {
+            background-color: #007bff;
+            color: #fff;
+            border: none;
+            padding: 12px 20px;
+            cursor: pointer;
+            border-radius: 5px;
+            font-size: 16px;
+        }
+        button:hover {
+            background-color: #0056b3;
+        }
+
+        .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+        }
+
+        /* Styles for error message */
+        .alert-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+        }
+
+        /* Close button */
+        .close {
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .close:hover {
+            color: #000;
+            text-decoration: none;
+            opacity: 0.75;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h2>Sign In</h2>
+        <form method="post">
+            {% csrf_token %}
+            {% for message in messages %}
+                <div class="alert {% if message.tags == 'success' %}alert-success {% elif message.tags == 'danger' %}alert-error {% endif %}" id="{% if message.tags == 'success' %}successMessage{% elif message.tags == 'danger' %}errorMessage{% endif %}">
+                    <a class="close" href="#" data-dismiss="alert">×</a>
+                    {{ message | safe }} <!-- This will print the actual message content -->
+                </div>
+            {% endfor %}
+            <label for="id_email">Email:</label>
+            {{ form.email }}
+            <label for="id_password1">Password:</label>
+            {{ form.password }}
+            <button type="submit">Login</button>
+        </form>
+        <p>Don't have an account? <a href="{% url 'register' %}">Register here</a>.</p>
+    </div>
+
+    <script>
+        // Function to remove messages after 3 seconds
+        setTimeout(function() {
+            var successMessage = document.getElementById('successMessage');
+            if (successMessage) {
+                successMessage.style.display = 'none';
+            }
+
+            var errorMessage = document.getElementById('errorMessage');
+            if (errorMessage) {
+                errorMessage.style.display = 'none';
+            }
+        }, 3000);
+    </script>
+</body>
+</html>

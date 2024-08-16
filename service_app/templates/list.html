@@ -5,11 +5,56 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Service List</title>
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+  <style>
+    .alert-success {
+            color: #155724;
+            background-color: #d4edda;
+            border-color: #c3e6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+        }
+
+        /* Styles for error message */
+        .alert-error {
+            color: #721c24;
+            background-color: #f8d7da;
+            border-color: #f5c6cb;
+            padding: 10px;
+            margin-bottom: 15px;
+            border: 1px solid transparent;
+            border-radius: 5px;
+        }
+
+        /* Close button */
+        .close {
+            float: right;
+            font-size: 20px;
+            font-weight: bold;
+            line-height: 1;
+            color: #000;
+            text-shadow: 0 1px 0 #fff;
+            opacity: 0.5;
+            transition: opacity 0.3s;
+        }
+        .close:hover {
+            color: #000;
+            text-decoration: none;
+            opacity: 0.75;
+        }
+  </style>
 </head>
 <body>
   
   <div class="container">
     <h1>Service List</h1>
+    {% for message in messages %}
+        <div class="alert {% if message.tags == 'success' %}alert-success {% elif message.tags == 'danger' %}alert-error {% endif %}" id="{% if message.tags == 'success' %}successMessage{% elif message.tags == 'danger' %}errorMessage{% endif %}">
+            <a class="close" href="#" data-dismiss="alert">×</a>
+            {{ message | safe }} <!-- This will print the actual message content -->
+        </div>
+    {% endfor %}
     <!-- Button trigger modal -->
     <button type="button" class="btn btn-primary mb-3" data-toggle="modal" data-target="#addServiceModal">
       Add Service
